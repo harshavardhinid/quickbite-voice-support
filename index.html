@@ -1,115 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>QuickBite AI Support</title>
-    <script src="https://cdn.vapi.ai/web.js"></script>
+<meta charset="UTF-8">
+<title>QuickBite Voice Support</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(120deg, #f0f6ff, #dce9ff);
-            text-align: center;
-        }
+<style>
+/* --- THEME SETTINGS --- */
+:root {
+  --primary: #e5eb25;       /* Brand Blue */
+  --primary-dark: #c49c00;
+  --bg: #f0f4f8;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --card-bg: #ffffff;
+}
 
-        .container {
-            margin-top: 80px;
-        }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
-        h1 {
-            font-size: 48px;
-            color: #1a1a1a;
-        }
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: radial-gradient(at top right, #dbeafe 0%, transparent 40%),
+                    radial-gradient(at bottom left, #e0e7ff 0%, transparent 40%);
+}
 
-        h1 span {
-            color: #007bff;
-        }
+/* Header */
+header {
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-        p {
-            font-size: 18px;
-            color: #555;
-        }
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-        .card {
-            background: white;
-            width: 400px;
-            margin: 40px auto;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+.status-badge {
+  font-size: 13px;
+  font-weight: 600;
+  background: #dcfce7;
+  color: #166534;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
 
-        .features {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+/* Main Layout */
+main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-        .feature {
-            background: #f1f5ff;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
+/* Hero Section */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
 
-        .mic-btn {
-            margin-top: 25px;
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.hero-content h1 {
+  font-size: 56px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
 
-        .mic-btn:hover {
-            background: #0056d2;
-            transform: scale(1.05);
-        }
+.hero-content h1 span { color: var(--primary); }
 
-        footer {
-            margin-top: 80px;
-            font-size: 14px;
-            color: gray;
-        }
-    </style>
+.hero-content p {
+  font-size: 20px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+/* Feature Grid */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-item {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* Right Side Card */
+.panel {
+  background: var(--card-bg);
+  border-radius: 32px;
+  padding: 50px 40px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.instruction-arrow {
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+.panel h2 { font-size: 28px; margin-bottom: 12px; }
+.panel p { color: var(--text-muted); margin-bottom: 0; }
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-10px);}
+  60% {transform: translateY(-5px);}
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-muted);
+  font-size: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+  .features { grid-template-columns: 1fr; }
+  .hero-content p { margin: 0 auto 40px; }
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Need help with your order? <br><span>Just speak.</span></h1>
-    <p>Our AI assistant handles order tracking, refunds & delivery issues instantly.</p>
+<header>
+  <div class="logo">⚡ QuickBite</div>
+  <div class="status-badge">● Systems Online</div>
+</header>
 
-    <div class="card">
-        <h2>🎙️ Talk to QuickBite AI</h2>
-        <p>Click below and start speaking</p>
+<main>
+  <section class="hero">
+    
+    <div class="hero-content">
+      <h1>Issues with your order? <br><span>Just say it.</span></h1>
+      <p>
+        Skip the chat queues. Our AI assistant handles tracking, refunds, and missing items instantly.
+      </p>
 
-        <div class="features">
-            <div class="feature">📦 Order Status</div>
-            <div class="feature">❌ Missing Items</div>
-            <div class="feature">💰 Refunds</div>
-        </div>
-
-        <button class="mic-btn" onclick="startCall()">Start Voice Support</button>
+      <div class="features">
+        <div class="feature-item">📦 Order Status</div>
+        <div class="feature-item">🍕 Missing Items</div>
+        <div class="feature-item">💳 Instant Refunds</div>
+      </div>
     </div>
-</div>
+
+    <div class="panel">
+      <span class="instruction-arrow">↘️</span>
+      <h2>Start Here</h2>
+      <p>
+        Click the <b>Blue Microphone</b> button in the bottom corner of your screen to start the call.
+      </p>
+    </div>
+
+  </section>
+</main>
 
 <footer>
-    © 2026 QuickBite AI Support
+  &copy; 2026 QuickBite Demo
 </footer>
 
 <script>
-    const vapi = new Vapi("94987b56-2cd3-485c-92e2-015fad06ed92");
+  const apiKey = "e2229348-8964-47d1-9c17-a684d1c419ee"; 
+  const assistant = "6d6025f1-77eb-43f6-8e6a-d1fdffd1c387"; 
 
-    function startCall() {
-        vapi.start({
-            assistantId: "17bbd5d0-8a54-4d47-a748-905cbed8660f"
-        });
-    }
+  (function(d, t) {
+    var g = document.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
+
+    g.onload = function() {
+      window.vapiSDK.run({
+        apiKey: apiKey,
+        assistant: assistant,
+        // This configuration customizes the DEFAULT button to match your UI
+        config: {
+          position: "bottom-right",
+          offset: "40px",
+          width: "50px",
+          height: "50px",
+          idle: {
+            color: "#2563eb", /* Matches your Primary Blue */
+            type: "pill",     /* Shape of the button */
+            title: "Need Help?", 
+            subtitle: "Talk to us",
+            icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg"
+          },
+          loading: {
+            color: "#93c5fd",
+            type: "pill",
+            title: "Connecting...",
+            subtitle: "Please wait"
+          },
+          active: {
+            color: "#ef4444", /* Red when talking */
+            type: "pill",
+            title: "Listening...",
+            subtitle: "Go ahead",
+            icon: "https://unpkg.com/lucide-static@0.321.0/icons/audio-lines.svg"
+          }
+        }
+      });
+    };
+  })(document, "script");
 </script>
 
 </body>
